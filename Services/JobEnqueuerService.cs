@@ -26,7 +26,6 @@ namespace etlbackgroundworker.Services
             {
                 Task = (token) => 
                 {
-                    Console.WriteLine($"Executing job at: {DateTime.UtcNow}");
                     // await Task.Delay(2000, cancellationToken);
                     throw new Exception("Somenting failed");
                 },

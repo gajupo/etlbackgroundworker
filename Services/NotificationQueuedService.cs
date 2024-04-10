@@ -28,7 +28,6 @@ namespace etlbackgroundworker.Services
 
                 if (_notifications.TryDequeue(out var notification))
                 {
-                    Console.WriteLine($"Sending notification to {notification.UserId}: Message {notification.Message}");
                 }
             }
         }

@@ -15,7 +15,6 @@ namespace etlbackgroundworker.Services
 
         public void ScheduleJob(ScheduleJob job)
         {
-            Console.WriteLine("Job added");
             _jobs.Add(job);
             _jobs.Sort(OrderJobs);
         }
@@ -24,7 +23,6 @@ namespace etlbackgroundworker.Services
             while (!stoppingToken.IsCancellationRequested)
             {
                 List<ScheduleJob> jobsToRemove = new List<ScheduleJob>();
-                Console.WriteLine($"Total of pending jobs {_jobs.Count}");
                 foreach (var job in _jobs.ToList())
                 {
                     var now = DateTime.UtcNow;
@@ -36,25 +34,21 @@ namespace etlbackgroundworker.Services
                             try
                             {
                                 await job.Task(stoppingToken);
-                                Console.WriteLine("Job executed successfully.");
                                 jobsToRemove.Add(job);
                                 break;
                             }
                             catch (System.Exception e)
                             {
-                                Console.WriteLine(e.Message);
                                 job.Retries--;
                                 if (job.Retries > 0)
                                 {
                                     await Task.Delay(TimeSpan.FromSeconds(job.DelayAfterRetray), stoppingToken);
-                                    Console.WriteLine("The job will try again to succed");
                                 }
                             }
 
                         }
                         if (job.Retries <= 0 && !jobsToRemove.Contains(job))
                         {
-                            Console.WriteLine("Jo has exhausted all retries and will be removed.");
                             jobsToRemove.Add(job);
                         }
                     }
@@ -66,7 +60,6 @@ namespace etlbackgroundworker.Services
                     _jobs.Remove(job);
                 }
 
-                Console.WriteLine("Waiting scheduler delay");
                 await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             }
         }

@@ -25,7 +25,6 @@ namespace etlbackgroundworker.Services
                 _jobSchedulerService.ScheduleJob(new ScheduleJob {
                     NextRunTime = DateTime.UtcNow.AddMinutes(2),
                     Task = async (cancellationToek) => {
-                        Console.WriteLine("Scheduled job was executed");
                         await Task.CompletedTask;
                     }
                 });

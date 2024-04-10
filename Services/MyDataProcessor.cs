@@ -10,7 +10,6 @@ namespace etlbackgroundworker.Services
     {
         public Task ProcessAsync()
         {
-            Console.WriteLine("Data processed...");
             return Task.CompletedTask;
         }
     }

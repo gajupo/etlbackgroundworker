@@ -10,8 +10,6 @@ namespace etlbackgroundworker.Services
     {
         public Task HandleNotificationAsync()
         {
-            Console.WriteLine("Handling notification");
-
             return Task.CompletedTask;
         }
     }
